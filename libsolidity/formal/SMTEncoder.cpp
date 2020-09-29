@@ -1032,7 +1032,11 @@ bool SMTEncoder::visit(MemberAccess const& _memberAccess)
 	if (exprType->category() == Type::Category::Magic)
 	{
 		if (identifier)
-			defineGlobalVariable(identifier->name() + "." + _memberAccess.memberName(), _memberAccess);
+		{
+			auto const& name = identifier->name();
+			solAssert(name == "block" || name == "msg" || name == "tx", "");
+			defineExpr(_memberAccess, m_context.state().txMember(name + "." + _memberAccess.memberName()));
+		}
 		else if (auto magicType = dynamic_cast<MagicType const*>(exprType); magicType->kind() == MagicType::Kind::MetaType)
 		{
 			auto const& memberName = _memberAccess.memberName();

@@ -18,13 +18,14 @@
 
 #pragma once
 
-#include <libsolidity/formal/EncodingContext.h>
 #include <libsolidity/formal/SymbolicVariables.h>
 #include <libsolidity/ast/AST.h>
 #include <libsolidity/ast/Types.h>
 
 namespace solidity::frontend::smt
 {
+
+class EncodingContext;
 
 /// Returns the SMT sort that models the Solidity type _type.
 smtutil::SortPointer smtSort(frontend::Type const& _type);
